@@ -1,6 +1,7 @@
 from listas.pizzas import ListPizza
 from listas.ingredientes import ListIngredientes
-from funciones.funciones import funciones
+from funciones.cliente.funciones import funcionesCliente
+from funciones.trabajador.funciones import funcionesTrabajador
 
 def saludar():
 
