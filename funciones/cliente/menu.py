@@ -1,0 +1,26 @@
+from .pedido import pedir, listar_pedido, modificar_pedido, eliminar_pedido
+
+
+def menu_cliente():
+    while True:
+        print("\n--- MENÚ CLIENTE ---")
+        print("1. Hacer pedido")
+        print("2. Ver pedido")
+        print("3. Modificar pedido")
+        print("4. Eliminar pedido")
+        print("0. Volver")
+
+        opcion = input("Elige una opción: ").strip()
+        match opcion:
+            case "1":
+                pedir()
+            case "2":
+                listar_pedido()
+            case "3":
+                modificar_pedido()
+            case "4":
+                eliminar_pedido()
+            case "0":
+                return
+            case _:
+                print("Opción no válida. Inténtalo de nuevo.")
