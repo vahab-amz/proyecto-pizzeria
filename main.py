@@ -15,7 +15,7 @@ def main():
             t = 1200
     negocio.pizzas_vendidas_aprox = t
     calcular_pizza()
-
+    
     rol = saludar()
     match rol:
         case "cliente":
