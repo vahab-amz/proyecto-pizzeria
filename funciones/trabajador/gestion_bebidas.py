@@ -28,26 +28,26 @@ def eliminar():
 
 def modificar():
     while True:
-        nombre = input("Dame el nombre del ingrediente: ").strip()
+        nombre = input("Dame el nombre de la bebida: ").strip()
 
         if nombre not in bebidas:
-            print(f"El ingrediente {nombre} no está registrado")
+            print(f"La bebida {nombre} no está registrada")
             continue
         else:
             break
 
-    precio = float(input("Dame el precio al kg: "))
+    precio = float(input("Dame el precio: "))
     bebidas[nombre] = precio
-    print(f"El ingrediente {nombre} se ha agregado correctamente")
+    print(f"La bebida {nombre} se ha agregado correctamente")
 
 def listar():
     for i in bebidas:
-        print(f"{i} - {bebidas[i]:.2f} €/Kg")
+        print(f"{i} - {bebidas[i]:.2f} €/L")
 
 
 def gestionar_bebidas():
     while True:
-        print("\n--- bebidas ---")
+        print("\n--- BEBIDAS ---")
         print("1. Añadir")
         print("2. Eliminar")
         print("3. Modificar")
