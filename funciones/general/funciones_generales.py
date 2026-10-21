@@ -14,12 +14,26 @@ def saludar():
             return "cliente"
         print("Opción no válida. Inténtalo de nuevo.")
         
- 
+def temporada():
+    print("Temporada") 
+    print("1. Baja") 
+    print("2. Media") 
+    print("3. Alta") 
+    
+    while True:
+        opc = int(input("Selecciona la temporada de pedidos que nos encontramos: "))
+        if opc == 1:
+            return "baja"
+        if opc == 2:
+            return "media"
+        if opc == 3:
+            return "alta"
+        print("Opción no válida. Inténtalo de nuevo.")
 
 def calcular_pizza():
     iva = negocio.iva 
     margen_beneficio = negocio.margen_beneficio
-    coste_gastos_por_pizza = (negocio.gastos_local + negocio.gastos_luz) / negocio.pizzas_vendidas_aprox
+    coste_gastos_por_pizza = (negocio.gastos_local + negocio.gastos_luz + negocio.gasto_personal_mensual) / negocio.pizzas_vendidas_aprox
      
     for pizza in pizzas.values():
        coste_ingrediente = 0
