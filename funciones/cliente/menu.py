@@ -1,4 +1,7 @@
-from .pedido import pedir, listar_pedido, modificar_pedido, eliminar_pedido
+from .pedido import pedir
+from .listar_pedido import listar_pedido
+from .modificar_pedido import modificar_pedido
+from .eliminar_pedido import eliminar_pedido
 
 
 def menu_cliente():
