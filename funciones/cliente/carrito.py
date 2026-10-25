@@ -12,10 +12,9 @@ def mostrar_carrito():
         return
     print(f"\nTienes {numero_pedido} items en el carrito.")
     print("Carrito actual:")
-    base_imponible = 0
     for i, item in enumerate(carrito, start=1):
         print(f"{i}. {item['nombre']} - {item['precio']:.2f} €")
-        base_imponible += item['precio']
+    base_imponible = calcular_total_carrito()
     print(".\n.\n.")
     print(f"Base imponible: {base_imponible:.2f} €")
     print(f"IVA ({negocio.iva:.0%}): {base_imponible * negocio.iva:.2f} €")
