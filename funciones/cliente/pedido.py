@@ -1,6 +1,6 @@
 from listas import pizzas
 from listas.bebidas import bebidas
-from .carrito import carrito, mostrar_carrito
+from .carrito import mostrar_carrito, pedir_cantidad, anadir_al_carrito
 
 # Funciones para el menú del cliente
 def pedir():
@@ -29,12 +29,11 @@ def pedir_pizza():
         return
     if numero_pizza.isdigit() and 1 <= int(numero_pizza) <= len(pizzas):
         pizza_seleccionada = list(pizzas.values())[int(numero_pizza) - 1]
-        carrito.append({
-            "tipo": "pizza",
-            "nombre": pizza_seleccionada["nombre"],
-            "precio": pizza_seleccionada["precio"],
-        })
-        print(f"Has añadido {pizza_seleccionada['nombre']} al carrito.")
+        cantidad = pedir_cantidad()
+        if cantidad == 0:
+            return
+        anadir_al_carrito("pizza", pizza_seleccionada["nombre"], pizza_seleccionada["precio"], cantidad)
+        print(f"Has añadido {cantidad} x {pizza_seleccionada['nombre']} al carrito.")
     else:
         print("Opción no válida. Inténtalo de nuevo.")
 
@@ -47,12 +46,11 @@ def pedir_bebida():
         return
     if numero_bebida.isdigit() and 1 <= int(numero_bebida) <= len(bebidas):
         nombre, precio = list(bebidas.items())[int(numero_bebida) - 1]
-        carrito.append({
-            "tipo": "bebida",
-            "nombre": nombre,
-            "precio": precio,
-        })
-        print(f"Has añadido {nombre} al carrito.")
+        cantidad = pedir_cantidad()
+        if cantidad == 0:
+            return
+        anadir_al_carrito("bebida", nombre, precio, cantidad)
+        print(f"Has añadido {cantidad} x {nombre} al carrito.")
     else:
         print("Opción no válida. Inténtalo de nuevo.")
 

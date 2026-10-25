@@ -1,17 +1,19 @@
 from listas import pizzas, ingredientes, negocio
 
 def saludar():
-    print("¡Bienvenido a la Pizzería!")
-    print("¿Quién eres?")
+    print("\n¿Quién eres?")
     print("1. Trabajador")
     print("2. Cliente")
+    print("0. Salir")
 
     while True:
-        opcion = input("Elige una opción (1 o 2): ").strip()
+        opcion = input("Elige una opción (1, 2 o 0): ").strip()
         if opcion == "1":
             return "trabajador"
         if opcion == "2":
             return "cliente"
+        if opcion == "0":
+            return "salir"
         print("Opción no válida. Inténtalo de nuevo.")
         
 def temporada():
