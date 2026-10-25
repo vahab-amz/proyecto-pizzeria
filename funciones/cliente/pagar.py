@@ -1,27 +1,52 @@
+import os
+from datetime import datetime
 from listas import negocio
 from .carrito import carrito, calcular_total_carrito
 
 
-# Muestra el ticket final. La base imponible llega como parámetro
-# porque más adelante se aplicarán ofertas antes de llamar a esta función
-def mostrar_ticket(base_imponible):
+# Construye el ticket como una lista de líneas (strings).
+# La base imponible llega como parámetro porque más adelante
+# se aplicarán ofertas antes de llamar a esta función
+def crear_lineas_ticket(base_imponible):
     importe_iva = base_imponible * negocio.iva
     total = base_imponible + importe_iva
-    print("\n=========================")
-    print("     PIZZERÍA PYTHON")
-    print("=========================")
-    print("Productos:")
+    lineas = [
+        "=========================",
+        "     PIZZERÍA PYTHON",
+        "=========================",
+        "Productos:",
+    ]
     for item in carrito:
-        print(f"- {item['tipo'].capitalize()} {item['nombre']}: {item['precio']:.2f} €")
-    print("-------------------------")
-    print(f"Base imponible: {base_imponible:.2f} €")
-    print(f"IVA ({negocio.iva:.0%}): {importe_iva:.2f} €")
-    print(f"Total: {total:.2f} €")
-    print("=========================")
-    print("Gracias por su compra.")
+        subtotal = item['precio'] * item['cantidad']
+        lineas.append(f"- {item['cantidad']} x {item['tipo'].capitalize()} {item['nombre']}: {subtotal:.2f} €")
+    lineas.append("-------------------------")
+    lineas.append(f"Base imponible: {base_imponible:.2f} €")
+    lineas.append(f"IVA ({negocio.iva:.0%}): {importe_iva:.2f} €")
+    lineas.append(f"Total: {total:.2f} €")
+    lineas.append("=========================")
+    lineas.append("Gracias por su compra.")
+    return lineas
 
 
-# Pide confirmación, muestra el ticket y vacía el carrito
+# Muestra el ticket en la terminal
+def mostrar_ticket(base_imponible):
+    print()
+    for linea in crear_lineas_ticket(base_imponible):
+        print(linea)
+
+
+# Guarda las líneas del ticket en tickets/ticket_AAAAMMDD_HHMMSS.txt
+def guardar_ticket(lineas):
+    os.makedirs("tickets", exist_ok=True)
+    fecha = datetime.now().strftime("%Y%m%d_%H%M%S")
+    ruta = f"tickets/ticket_{fecha}.txt"
+    with open(ruta, "w", encoding="utf-8") as archivo:
+        for linea in lineas:
+            archivo.write(linea + "\n")
+    print(f"Ticket guardado en: {ruta}")
+
+
+# Pide confirmación, muestra y guarda el ticket y vacía el carrito
 def pagar():
     if len(carrito) == 0:
         print("\nTu carrito está vacío.")
@@ -34,4 +59,5 @@ def pagar():
         print("Pago cancelado.")
         return
     mostrar_ticket(base_imponible)
+    guardar_ticket(crear_lineas_ticket(base_imponible))
     carrito.clear()
