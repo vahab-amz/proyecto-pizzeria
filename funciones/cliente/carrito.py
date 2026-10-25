@@ -21,3 +21,10 @@ def mostrar_carrito():
     print(f"IVA ({negocio.iva:.0%}): {base_imponible * negocio.iva:.2f} €")
     print(f"Precio total: {base_imponible + base_imponible * negocio.iva:.2f} €")
     print("-------------------------")
+    
+    
+def calcular_total_carrito():
+    total = 0
+    for item in carrito:
+        total += item["precio"]
+    return total
