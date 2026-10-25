@@ -12,7 +12,7 @@ def main():
         case "media":
             t = 1000
         case "alta":
-            t = 1200
+            t = 1500
     negocio.pizzas_vendidas_aprox = t
     calcular_pizza()
     

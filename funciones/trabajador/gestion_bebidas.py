@@ -23,7 +23,8 @@ def eliminar():
             if nombre in bebidas:
                 del bebidas[nombre] 
                 break
-
+            else:
+                print(f"La bebida {nombre} no está en el almacen.")
 
 
 def modificar():

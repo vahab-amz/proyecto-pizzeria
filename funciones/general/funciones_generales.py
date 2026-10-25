@@ -30,8 +30,10 @@ def temporada():
             return "alta"
         print("Opción no válida. Inténtalo de nuevo.")
 
+
+
 def calcular_pizza():
-    iva = negocio.iva 
+    
     margen_beneficio = negocio.margen_beneficio
     coste_gastos_por_pizza = (negocio.gastos_local + negocio.gastos_luz + negocio.gasto_personal_mensual) / negocio.pizzas_vendidas_aprox
      

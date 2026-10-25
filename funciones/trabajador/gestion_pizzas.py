@@ -26,7 +26,7 @@ def crear_pizza():
             print(f"El producto {item} no se encuentra en el almacén")
             continue
 
-        cantidad = float(input("Ingresa la cantidad en gramos: "))
+        cantidad = float(input("Ingresa la cantidad en KG: "))
 
         ingre.append({"nombre": item, "cantidad": cantidad})
 
@@ -68,7 +68,7 @@ def modificar_pizza():
             print(f"El producto {item} no se encuentra en el almacén")
             continue
 
-        cantidad = float(input("Ingresa la cantidad en gramos: "))
+        cantidad = float(input("Ingresa la cantidad en KG: "))
 
         ingre.append({"nombre": item, "cantidad": cantidad})
 

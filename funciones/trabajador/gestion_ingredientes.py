@@ -1,5 +1,5 @@
 from listas import ingredientes
-
+from listas import pizzas
 
 def añadir():
     while True:
@@ -20,10 +20,17 @@ def añadir():
 def eliminar():
     while True:
             nombre = input("Nombre de la pizza a eliminar: ").strip()
+            eliminar = False
+            for pizza in pizzas.values():
+                for ingrediente in pizza['ingredientes']:
+                    if ingrediente['nombre'] == nombre:
+                        eliminar = True
 
-            if nombre in ingredientes:
+            if nombre in ingredientes and  not eliminar:
                 del ingredientes[nombre] 
                 break
+            elif eliminar == True :
+                print(f"El ingrediente {nombre} se usa en una pizza")
             else:
                 print(f"El ingrediente {nombre} no se encuentra en el almacen")
                 continue
