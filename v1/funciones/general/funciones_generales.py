@@ -1,4 +1,5 @@
-from listas import pizzas, ingredientes, negocio
+from listas import pizzas, ingredientes
+from listas import negocio
 
 def saludar():
     print("\n¿Quién eres?")
