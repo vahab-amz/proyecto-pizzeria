@@ -1,8 +1,9 @@
 from funciones.general import saludar, calcular_pizza, temporada
 from funciones.cliente import menu_cliente
 from funciones.trabajador import menu_trabajador
-from listas import negocio, pizzas
-
+from listas import pizzas
+from listas import negocio
+import os
 def main():
     print("¡Bienvenido a la Pizzería!")
 
@@ -32,4 +33,5 @@ def main():
 
 
 if __name__ == "__main__":
+    os.system("cls")
     main()
