@@ -4,6 +4,7 @@ from funciones.trabajador import menu_trabajador
 from listas import pizzas
 from listas import negocio
 import os
+
 def main():
     print("¡Bienvenido a la Pizzería!")
 

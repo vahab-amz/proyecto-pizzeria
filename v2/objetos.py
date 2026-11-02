@@ -15,3 +15,13 @@ class Pizza:
     def agregar_ingrediente(self,ingrediente):
         self.ingredientes.append(ingrediente)
 
+class Bebida:
+    def __init__(self,nombre,precio):
+        self.nombre = nombre
+        self.precio = precio
+
+class Ofertas:
+    def __init__(self,nombre,descuento):
+        self.nombre = nombre
+        self.descuento = descuento
+
