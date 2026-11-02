@@ -1,0 +1,49 @@
+from elementos import pizzas,ingredientes,negocio
+
+def saludar():
+    print("\n¿Quién eres?")
+    print("1. Trabajador")
+    print("2. Cliente")
+    print("0. Salir")
+
+    while True:
+        opcion = input("Elige una opción (1, 2 o 0): ").strip()
+        if opcion == "1":
+            return "trabajador"
+        if opcion == "2":
+            return "cliente"
+        if opcion == "0":
+            return "salir"
+        print("Opción no válida. Inténtalo de nuevo.")
+        
+def temporada():
+    print("Temporada") 
+    print("1. Baja") 
+    print("2. Media") 
+    print("3. Alta") 
+    
+    while True:
+        opc = int(input("Selecciona la temporada de pedidos que nos encontramos: "))
+        if opc == 1:
+            return "baja"
+        if opc == 2:
+            return "media"
+        if opc == 3:
+            return "alta"
+        print("Opción no válida. Inténtalo de nuevo.")
+
+def calcular_pizza():
+    
+    margen_beneficio = negocio.margen_beneficio
+    coste_gastos_por_pizza = (negocio.gastos_local + negocio.gastos_luz + negocio.gasto_personal_mensual) / negocio.pizzas_vendidas_aprox
+     
+    for pizza in pizzas.values():
+       coste_ingrediente = 0
+       for ingrediente in pizza['ingredientes']:
+           nombre = ingrediente['nombre']
+           cantidad = ingrediente['cantidad']
+           precio_kg = ingredientes[nombre]
+           coste_ingrediente += precio_kg * cantidad
+
+       coste_total = coste_ingrediente + coste_gastos_por_pizza
+       pizza['precio'] = round(coste_total * (1 + margen_beneficio), 2)

@@ -25,3 +25,11 @@ class Ofertas:
         self.nombre = nombre
         self.descuento = descuento
 
+class Negocio:
+    def __init__(self,iva,margen_beneficio,gastos_local,gastos_luz,pizzas_vendidas_aprox,gasto_personal_mensual): 
+        self.iva = iva 
+        self.margen_beneficio = margen_beneficio 
+        self.gastos_local = gastos_local 
+        self.gastos_luz = gastos_luz 
+        self.pizzas_vendidas_aprox = pizzas_vendidas_aprox 
+        self.gasto_personal_mensual = gasto_personal_mensual
