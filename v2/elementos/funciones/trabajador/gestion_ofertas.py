@@ -1,41 +1,65 @@
+from objetos import Oferta
 from elementos.ofertas import ofertas
+
+
+def buscar_oferta(nombre):
+    # La lista contiene objetos: comparamos su atributo nombre.
+    return next((oferta for oferta in ofertas if oferta.nombre == nombre), None)
+
+
+def pedir_descuento():
+    # Se guarda el factor del precio: 0.9 significa pagar el 90% (10% menos).
+    while True:
+        try:
+            descuento = float(input("Factor del precio entre 0 y 1 (0.9 = 10% de descuento): "))
+        except ValueError:
+            print("Introduce un número válido.")
+            continue
+        if 0 <= descuento <= 1:
+            return descuento
+        print("El factor debe estar entre 0 y 1.")
+
 
 def añadir():
     while True:
         nombre = input("Dame el nombre de la oferta: ").strip()
-        if nombre in ofertas:
+        if not nombre:
+            print("El nombre no puede estar vacío.")
+            continue
+        if buscar_oferta(nombre) is not None:
             print("Nombre de la oferta registrada")
             continue
-        else:
-            precio = float(input("Cantidad a ingresar: "))
-            ofertas[nombre] = precio
-            print(f"La oferta {nombre} se ha registrado correctamente")
-            break
+        ofertas.append(Oferta(nombre, pedir_descuento()))
+        print(f"La oferta {nombre} se ha registrado correctamente")
+        return
 
-        
+
 def eliminar():
     while True:
         nombre = input("Dame el nombre de la oferta a eliminar: ").strip()
-        if nombre not in ofertas:
+        oferta = buscar_oferta(nombre)
+        if oferta is None:
             print(f"La oferta {nombre} no está registrada")
-        else:
-            del ofertas[nombre]
-            break
+            continue
+        ofertas.remove(oferta)
+        return
+
 
 def modificar():
     while True:
         nombre = input("Dame el nombre de la oferta: ").strip()
-        if nombre not in ofertas:
+        oferta = buscar_oferta(nombre)
+        if oferta is None:
             print("Nombre de la oferta no registrada")
-            continue   
-        else:
-            precio = float(input("Dame la cantidad: "))
-            ofertas[nombre] = precio
-            break    
+            continue
+        oferta.descuento = pedir_descuento()
+        return
+
 
 def listar():
     for oferta in ofertas:
-        print(f"{oferta} - {ofertas[oferta]:.2f}")
+        print(f"{oferta.nombre} - factor de precio: {oferta.descuento:.2f}")
+
 
 def gestionar_ofertas():
     while True:

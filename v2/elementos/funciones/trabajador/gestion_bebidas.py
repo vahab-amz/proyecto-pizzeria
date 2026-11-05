@@ -1,49 +1,54 @@
+from objetos import Bebida
 from elementos.bebidas import bebidas
+from elementos.funciones.trabajador.entradas import pedir_nombre, pedir_numero
+
+
+def buscar_bebida(nombre):
+    for elemento in bebidas:
+        if elemento.nombre == nombre:
+            return elemento
+    return None
+
 
 def añadir():
     while True:
-        nombre = input("Dame el nombre de la nueva bebida: ").strip()
-
-        if nombre in bebidas:
-            print(f"La bebida {nombre} ya está registrado")
+        nombre = pedir_nombre("Nombre del nuevo elemento: ")
+        if buscar_bebida(nombre) is not None:
+            print("El nombre ya está registrado")
             continue
-        else:
-            break
-
-    precio = float(input("Dame el precio por unidad: "))
-    bebidas[nombre] = precio
-    print(f"La bebida {nombre} se ha agregado correctamente")
+        precio = pedir_numero("Precio por unidad: ")
+        bebidas.append(Bebida(nombre, precio))
+        print(f"{nombre} añadido correctamente")
+        return
 
 
-    
 def eliminar():
     while True:
-            nombre = input("Nombre de la bebida a eliminar: ").strip()
-
-            if nombre in bebidas:
-                del bebidas[nombre] 
-                break
-            else:
-                print(f"La bebida {nombre} no está en el almacen.")
+        nombre = pedir_nombre("Nombre del elemento a eliminar: ")
+        elemento = buscar_bebida(nombre)
+        if elemento is None:
+            print("El nombre no está registrado")
+            continue
+        bebidas.remove(elemento)
+        print(f"{nombre} eliminado correctamente")
+        return
 
 
 def modificar():
     while True:
-        nombre = input("Dame el nombre de la bebida: ").strip()
-
-        if nombre not in bebidas:
-            print(f"La bebida {nombre} no está registrada")
+        nombre = pedir_nombre("Nombre del elemento a modificar: ")
+        elemento = buscar_bebida(nombre)
+        if elemento is None:
+            print("El nombre no está registrado")
             continue
-        else:
-            break
+        elemento.precio = pedir_numero("Precio por unidad: ")
+        print(f"{nombre} modificado correctamente")
+        return
 
-    precio = float(input("Dame el precio: "))
-    bebidas[nombre] = precio
-    print(f"La bebida {nombre} se ha agregado correctamente")
 
 def listar():
-    for i in bebidas:
-        print(f"{i} - {bebidas[i]:.2f} €/L")
+    for elemento in bebidas:
+        print(f"{elemento.nombre} - {elemento.precio:.2f} €/unidad")
 
 
 def gestionar_bebidas():

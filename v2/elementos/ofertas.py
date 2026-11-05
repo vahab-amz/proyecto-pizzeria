@@ -1,4 +1,4 @@
-from elementos.ofertas import Oferta
+from objetos import Oferta
 
 ofertas = [
     Oferta("Sin descuento", 1.0),

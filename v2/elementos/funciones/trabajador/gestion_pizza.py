@@ -1,105 +1,83 @@
+from objetos import Pizza, Ingrediente
 from elementos.pizzas import pizzas
 from elementos.ingredientes import ingredientes
-from funciones.general import calcular_pizza
+from elementos.funciones.general.funciones_generales import calcular_pizza
+from elementos.funciones.trabajador.entradas import pedir_nombre, pedir_numero
+
+
+def buscar_pizza(nombre):
+    for pizza in pizzas:
+        if pizza.nombre == nombre:
+            return pizza
+    return None
+
+
+def pedir_receta():
+    receta = []
+    while True:
+        nombre = pedir_nombre("Ingrediente (Salir para terminar): ")
+        if nombre.lower() == "salir":
+            return receta
+        if not any(ingrediente.nombre == nombre for ingrediente in ingredientes):
+            print(f"El producto {nombre} no se encuentra en el almacén")
+            continue
+        cantidad = pedir_numero("Cantidad en kg: ")
+        # Un objeto nuevo guarda los kilos de la receta, sin cambiar el catálogo.
+        receta.append(Ingrediente(nombre, cantidad))
+
 
 def crear_pizza():
     while True:
-        nombre = input("Nombre: ").strip()
-
-        if nombre in pizzas:
-            print("Pizza ya registrada")
-        else:
+        nombre = pedir_nombre("Nombre: ")
+        if buscar_pizza(nombre) is None:
             break
+        print("Pizza ya registrada")
 
     descripcion = input("Descripción: ").strip()
-    tamanyo = input("Tamaño: ").strip()
+    tamano = input("Tamaño: ").strip()
     tipo_masa = input("Masa: ").strip()
-
-    ingre = []
-
-    while True:
-        item = input("Dame el ingrediente (Salir para terminar): ").strip()
-
-        if item.lower() == "salir":
-            break
-
-        if item not in ingredientes:
-            print(f"El producto {item} no se encuentra en el almacén")
-            continue
-
-        cantidad = float(input("Ingresa la cantidad en KG: "))
-
-        ingre.append({"nombre": item, "cantidad": cantidad})
-
-    pizzas[nombre] = {
-    "nombre": nombre,
-    "precio": None,
-    "descripcion": descripcion,
-    "tamano": tamanyo,
-    "tipo_de_masa": tipo_masa,
-    "ingredientes": ingre
-}
-
+    receta = pedir_receta()
+    pizzas.append(Pizza(nombre, None, descripcion, tamano, tipo_masa, receta))
     print(f"Pizza {nombre} añadida correctamente.")
 
 
 def modificar_pizza():
     while True:
-        nombre = input("Nombre de la pizza a modificar: ").strip()
-
-        if nombre not in pizzas:
-            print(f"La pizza {nombre} no se encuentra en la carta")
-            continue
-        else:
+        nombre = pedir_nombre("Nombre de la pizza a modificar: ")
+        pizza = buscar_pizza(nombre)
+        if pizza is not None:
             break
-    
+        print(f"La pizza {nombre} no se encuentra en la carta")
+
     descripcion = input("Descripción: ").strip()
-    tamanyo = input("Tamaño: ").strip()
+    tamano = input("Tamaño: ").strip()
     tipo_masa = input("Masa: ").strip()
+    receta = pedir_receta()
+    pizza.descripcion = descripcion
+    pizza.tamano = tamano
+    pizza.tipo_masa = tipo_masa
+    pizza.ingredientes = receta
+    pizza.precio = None
+    print(f"Pizza {nombre} modificada correctamente.")
 
-    ingre = []
-
-    while True:
-        item = input("Dame el ingrediente (Salir para terminar): ").strip()
-
-        if item.lower() == "salir":
-            break
-
-        if item not in ingredientes:
-            print(f"El producto {item} no se encuentra en el almacén")
-            continue
-
-        cantidad = float(input("Ingresa la cantidad en KG: "))
-
-        ingre.append({"nombre": item, "cantidad": cantidad})
-
-    pizzas[nombre] = {
-    "nombre": nombre,
-    "precio": None,
-    "descripcion": descripcion,
-    "tamano": tamanyo,
-    "tipo_de_masa": tipo_masa,
-    "ingredientes": ingre
-}
-
-    print(f"Pizza {nombre} modificada correctamente.")   
 
 def eliminar_pizza():
     while True:
-            nombre = input("Nombre de la pizza a eliminar: ").strip()
-
-            if nombre in pizzas:
-                del pizzas[nombre] 
-                break
-            else:
-                print(f"La pizza {nombre} no se encuentra en la carta")
-                continue
+        nombre = pedir_nombre("Nombre de la pizza a eliminar: ")
+        pizza = buscar_pizza(nombre)
+        if pizza is None:
+            print(f"La pizza {nombre} no se encuentra en la carta")
+            continue
+        pizzas.remove(pizza)
+        print(f"Pizza {nombre} eliminada correctamente.")
+        return
 
 
 def listar_pizzas():
     calcular_pizza()
-    for pizza in pizzas.values():
-        print(f"{pizza['nombre']} - {pizza['precio']}")
+    for pizza in pizzas:
+        print(f"{pizza.nombre} - {pizza.precio:.2f} €")
+
 
 def gestionar_pizzas():
     while True:

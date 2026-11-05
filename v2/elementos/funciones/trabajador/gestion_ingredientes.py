@@ -1,58 +1,64 @@
-from elementos.pizzas import pizzas
+# En el catálogo, Ingrediente.cantidad representa el precio por kg.
+from objetos import Ingrediente
 from elementos.ingredientes import ingredientes
+from elementos.pizzas import pizzas
+from elementos.funciones.trabajador.entradas import pedir_nombre, pedir_numero
+
+
+def buscar_ingrediente(nombre):
+    for elemento in ingredientes:
+        if elemento.nombre == nombre:
+            return elemento
+    return None
+
 
 def añadir():
     while True:
-        nombre = input("Dame el nombre del nuevo ingrediente: ").strip()
-
-        if nombre in ingredientes:
-            print(f"El ingrediente {nombre} ya está registrado")
+        nombre = pedir_nombre("Nombre del nuevo elemento: ")
+        if buscar_ingrediente(nombre) is not None:
+            print("El nombre ya está registrado")
             continue
-        else:
-            break
-
-    precio = float(input("Dame el precio al kg: "))
-    ingredientes[nombre] = precio
-    print(f"El ingrediente {nombre} se ha agregado correctamente")
+        precio = pedir_numero("Precio por kg: ")
+        ingredientes.append(Ingrediente(nombre, precio))
+        print(f"{nombre} añadido correctamente")
+        return
 
 
-    
 def eliminar():
     while True:
-            nombre = input("Nombre de la pizza a eliminar: ").strip()
-            eliminar = False
-            for pizza in pizzas.values():
-                for ingrediente in pizza['ingredientes']:
-                    if ingrediente['nombre'] == nombre:
-                        eliminar = True
-
-            if nombre in ingredientes and  not eliminar:
-                del ingredientes[nombre] 
-                break
-            elif eliminar == True :
-                print(f"El ingrediente {nombre} se usa en una pizza")
-            else:
-                print(f"El ingrediente {nombre} no se encuentra en el almacen")
-                continue
+        nombre = pedir_nombre("Nombre del elemento a eliminar: ")
+        elemento = buscar_ingrediente(nombre)
+        if elemento is None:
+            print("El nombre no está registrado")
+            continue
+        if any(
+            item.nombre == nombre
+            for pizza in pizzas
+            for item in pizza.ingredientes
+        ):
+            print(f"El ingrediente {nombre} se usa en una pizza")
+            continue
+        ingredientes.remove(elemento)
+        print(f"{nombre} eliminado correctamente")
+        return
 
 
 def modificar():
     while True:
-        nombre = input("Dame el nombre del ingrediente: ").strip()
-
-        if nombre not in ingredientes:
-            print(f"El ingrediente {nombre} no está registrado")
+        nombre = pedir_nombre("Nombre del elemento a modificar: ")
+        elemento = buscar_ingrediente(nombre)
+        if elemento is None:
+            print("El nombre no está registrado")
             continue
-        else:
-            break
+        elemento.cantidad = pedir_numero("Precio por kg: ")
+        print(f"{nombre} modificado correctamente")
+        return
 
-    precio = float(input("Dame el precio al kg: "))
-    ingredientes[nombre] = precio
-    print(f"El ingrediente {nombre} se ha agregado correctamente")
 
 def listar():
-    for i in ingredientes:
-        print(f"{i} - {ingredientes[i]:.2f} €/Kg")
+    for elemento in ingredientes:
+        print(f"{elemento.nombre} - {elemento.cantidad:.2f} €/kg")
+
 
 def gestionar_ingredientes():
     while True:

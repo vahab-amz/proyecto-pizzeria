@@ -1,4 +1,6 @@
-from elementos import pizzas,ingredientes,negocio
+from elementos.pizzas import pizzas
+from elementos.ingredientes import ingredientes
+from elementos.negocio import negocio
 
 def saludar():
     print("\n¿Quién eres?")
@@ -33,17 +35,23 @@ def temporada():
         print("Opción no válida. Inténtalo de nuevo.")
 
 def calcular_pizza():
-    
-    margen_beneficio = negocio.margen_beneficio
-    coste_gastos_por_pizza = (negocio.gastos_local + negocio.gastos_luz + negocio.gasto_personal_mensual) / negocio.pizzas_vendidas_aprox
-     
-    for pizza in pizzas.values():
-       coste_ingrediente = 0
-       for ingrediente in pizza['ingredientes']:
-           nombre = ingrediente['nombre']
-           cantidad = ingrediente['cantidad']
-           precio_kg = ingredientes[nombre]
-           coste_ingrediente += precio_kg * cantidad
 
-       coste_total = coste_ingrediente + coste_gastos_por_pizza
-       pizza['precio'] = round(coste_total * (1 + margen_beneficio), 2)
+
+    margen_beneficio = negocio.margen_beneficio
+
+    coste_gastos_por_pizza = (negocio.gastos_local+ negocio.gastos_luz + negocio.gasto_personal_mensual) / negocio.pizzas_vendidas_aprox
+
+    precios_por_nombre = {
+        ingrediente.nombre: ingrediente.cantidad
+        for ingrediente in ingredientes
+    }
+
+    for pizza in pizzas:
+        coste_ingredientes = 0
+
+        for ingrediente in pizza.ingredientes:
+            precio_kg = precios_por_nombre[ingrediente.nombre]
+            coste_ingredientes += precio_kg * ingrediente.cantidad
+
+        coste_total = coste_ingredientes + coste_gastos_por_pizza
+        pizza.precio = round(coste_total * (1 + margen_beneficio), 2)
