@@ -50,9 +50,4 @@ def calcular_pizza():
 
        coste_total = coste_ingrediente + coste_gastos_por_pizza
        pizza['precio'] = round(coste_total * (1 + margen_beneficio), 2)
-    
 
-        
-           
-
-         
