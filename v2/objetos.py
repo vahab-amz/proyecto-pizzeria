@@ -20,7 +20,7 @@ class Bebida:
         self.nombre = nombre
         self.precio = precio
 
-class Ofertas:
+class Oferta:
     def __init__(self,nombre,descuento):
         self.nombre = nombre
         self.descuento = descuento
