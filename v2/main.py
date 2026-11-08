@@ -1,6 +1,6 @@
 from elementos.funciones.general.funciones_generales import saludar,temporada,calcular_pizza
 from elementos.negocio import negocio
-#from elementos.funciones.cliente import menu_cliente
+from elementos.funciones.cliente.menu import menu_cliente
 from elementos.funciones.trabajador.menu import menu_trabajador
 import os
 
@@ -21,11 +21,10 @@ def main():
     while True:
         calcular_pizza()
 
-        rol = saludar()
+        rol = saludar() 
         match rol:
             case "cliente":
-                #menu_cliente()
-                print("")
+                menu_cliente()
             case "trabajador":
                 menu_trabajador()
             case "salir":
